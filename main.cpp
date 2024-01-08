@@ -4,8 +4,7 @@ class RubikKup {
 private:
     static const int SIZE = 3;
     char cube[6][SIZE][SIZE];
-    int rotationCount = 0;
-    char staringColor;
+
 public:
     RubikKup() {
         initializeCube();
@@ -30,7 +29,7 @@ public:
                 for (int k = 0; k < SIZE; k++) {
                     std::cout << cube[i][j][k] << " | ";
                 }
-                std::cout << "-   -   -"<< std::endl;
+                std::cout << std::endl << "-   -   -"<< std::endl;
             }
             std::cout << "-------------" << std::endl;
         }
@@ -55,15 +54,15 @@ public:
                 cube[3][i][0] = temp[SIZE - 1 - i];
         }
         temp[0] = cube[2][0][0];
-		cube[2][0][0] = cube[2][0][2];
-		cube[2][0][2] = cube[2][2][2];
-		cube[2][2][2] = cube[2][2][0];
-		cube[2][2][0] = temp[0];
+		cube[2][0][0] = cube[2][2][0];
+		cube[2][2][0] = cube[2][2][2];
+		cube[2][2][2] = cube[2][0][2];
+		cube[2][0][2] = temp[0];
 		temp[0] = cube[2][0][1];
-		cube[2][0][1] = cube[2][1][2];
-		cube[2][1][2] = cube[2][2][1];
-		cube[2][2][1] = cube[2][1][0];
-		cube[2][1][0] = temp[0];
+		cube[2][0][1] = cube[2][1][0];
+		cube[2][1][0] = cube[2][2][1];
+		cube[2][2][1] = cube[2][1][2];
+		cube[2][1][2] = temp[0];
     }
     void rotateL() {
         char temp[SIZE];
@@ -281,10 +280,10 @@ public:
                 cube[2][i][0] = cube[5][0][SIZE - 1 - i];
         }
         for (int i = 0; i < SIZE; i++) {
-                cube[5][0][i] = cube[4][SIZE - 1 - i][SIZE - 1];
+                cube[5][0][i] = cube[4][i][SIZE - 1];
         }
         for (int i = 0; i < SIZE; i++) {
-                cube[4][i][SIZE - 1] = temp[i];
+                cube[4][i][SIZE - 1] = temp[SIZE - 1 - i];
         }
         temp[0] = cube[1][0][0];
         cube[1][0][0] = cube[1][0][2];
@@ -304,16 +303,16 @@ public:
             temp[i] = cube[0][0][i];
         }
         for (int i = 0; i < SIZE; i++) {
-                cube[0][0][i] = cube[4][i][0];
+                cube[0][0][i] = cube[4][SIZE - 1 - i][0];
         }
         for (int i = 0; i < SIZE; i++) {
-                cube[4][i][0] = cube[5][SIZE - 1][SIZE - 1 - i];
+                cube[4][i][0] = cube[5][SIZE - 1][i];
         }
         for (int i = 0; i < SIZE; i++) {
                 cube[5][SIZE - 1][i] = cube[2][SIZE - 1 - i][SIZE - 1];
         }
         for (int i = 0; i < SIZE; i++) {
-                cube[2][i][SIZE - 1] = temp[SIZE - 1 - i];
+                cube[2][i][SIZE - 1] = temp[i];
         }
         temp[0] = cube[3][0][0];
         cube[3][0][0] = cube[3][0][2];
@@ -391,7 +390,6 @@ public:
 int main() {
     RubikKup rubikKup;
     std::cout << "Başlangıç durumu:" << std::endl;
-    rubikKup.printCube();
     rubikKup.rotateRiverseF();
     rubikKup.rotateU();
     rubikKup.rotateRiverseB();
